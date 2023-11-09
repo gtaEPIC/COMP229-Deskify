@@ -7,7 +7,7 @@ these tickets and resolve them.
 ## Users / Roles
 - [@gtaEPIC (Johnathan Hall)](https://github.com/gtaEPIC) - Project Manager
 - [@imirza7 (Ibtesam Mirza)](https://github.com/imirza7) - Lead Software Engineer
-- [@Rodrigo Soto (Rodrigo Soto Acuna)](https://github.com/rsotoacu) - UI Programmer
-- [@TBD (Mohammed Subhaan Asif Hakeem)]() - Security Programmer
+- [@rsotoacu (Rodrigo Soto Acuna)](https://github.com/rsotoacu) - UI Programmer
+- [@Subhan636 (Mohammed Subhaan Asif Hakeem)](https://github.com/Subhan636) - Security Programmer
 - [@TBD (Anmoljeet Kaur)]() - Database Programmer
 - [@saiham019 (Saiham Salim Ullah)](https://github.com/saiham019) - Web Designer
