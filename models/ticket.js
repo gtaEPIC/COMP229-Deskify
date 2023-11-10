@@ -20,7 +20,12 @@ const TicketSchema = new Schema({
     updated: {type: Date, default: Date.now, required: true}, // Date the ticket was last updated.
     //TODO: Finish adding User
     //user: {type: Schema.Types.ObjectId, ref: 'User', required: true}, // User that created the ticket
-    //TODO: Add iteration field
+    //Iteration object
+    iteration: {
+        //username: {type: String, required: true}, // Username of the person who regitered the change
+        dateCreated: {type: Date, default: Date.now, required: true}, // Date the iteration was made
+        comment: {type: String, required: true} // Iteration comment from the user
+    },
 });
 
 TicketSchema.set('toJSON', {

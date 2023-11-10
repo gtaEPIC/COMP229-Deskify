@@ -39,7 +39,11 @@ module.exports.createTicket = async function (req, res, next) {
             dateCreated: new Date(),
             updated: new Date(),
             //user: req.body.user,
-
+            iteration: {
+                //username: req.body.user,
+                dateCreated: new Date(),
+                comment: req.body.comment,
+            },
         });
         res.json({ success: true, ticket: ticket });
     } catch (error) {
@@ -60,6 +64,11 @@ module.exports.updateTicket = async function (req, res, next) {
         updatedTicket.record = ticket.record;
         updatedTicket.dateCreated = ticket.dateCreated;
         updatedTicket.updated = new Date();
+        //Iteration
+        //updatedTicket.iteration.username = ticket.user;
+        updatedTicket.iteration.dateCreated = new Date();
+        updatedTicket.iteration.comment = ticket.iteration.comment;
+
 
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
         console.log(result);
@@ -98,6 +107,11 @@ module.exports.disableTicket = async function (req, res, next) {
             dateCreated: ticket.dateCreated,
             updated: ticket.updated,
             //user: ticket.user,
+            //Iteration
+            // iterationUser: ticket.iteration.user,
+            iterationDateCreated: ticket.iteration.dateCreated,
+            iterationComment: ticket.iteration.comment,
+
         });
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
         console.log(result);
