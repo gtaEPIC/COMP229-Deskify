@@ -58,6 +58,8 @@ module.exports.updateTicket = async function (req, res, next) {
         let updatedTicket = ticketModel(req.body);
         updatedTicket._id = ticket._id;
         updatedTicket.record = ticket.record;
+        updatedTicket.dateCreated = ticket.dateCreated;
+        updatedTicket.updated = new Date();
 
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
         console.log(result);
