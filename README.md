@@ -12,6 +12,16 @@ these tickets and resolve them.
 - [@Annie021 (Anmoljeet Kaur)](https://github.com/Annie021) - Database Programmer
 - [@saiham019 (Saiham Salim Ullah)](https://github.com/saiham019) - Web Designer
 
+## ⚠️ DATABASE SETUP ⚠️
+The database library is mongoose. <br>
+You will need to create a `.env` file in the root directory. <br>
+Inside this file you should have the following variables: <br>
+```
+ATLASDB=<your atlas db connection string>
+```
+If you do not include this, your program will not work. <br>
+**Do not surround with `"`, just use the text and make sure the password is correct.** <br>
+
 ## Branch Protection
 The `main` branch is protected from being pushed to. <br>
 All changes must be made with a branch and a pull request. <br>
