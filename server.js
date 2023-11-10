@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var configDB = require("./config/db");
+var app = require('./config/app');
 var debug = require('debug')('comp229-deskify:server');
 var http = require('http');
 
@@ -20,6 +21,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var db = configDB;
 
 /**
  * Listen on provided port, on all network interfaces.
