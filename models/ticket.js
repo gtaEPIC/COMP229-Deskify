@@ -17,9 +17,20 @@ const TicketSchema = new Schema({
     priority: {type: Number, default: 1, required: true}, // Priority of the ticket
     record: {type: String, required: true, unique: true}, // Record of the ticket (Format to be "YYYYMMDD-<4 digit number>")
     dateCreated: {type: Date, default: Date.now, required: true}, // Date the ticket was created.
+    updated: {type: Date, default: Date.now, required: true}, // Date the ticket was last updated.
     //TODO: Finish adding User
     //user: {type: Schema.Types.ObjectId, ref: 'User', required: true}, // User that created the ticket
     //TODO: Add iteration field
 });
+
+TicketSchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+        // remove these props when object is serialized
+        delete ret._id;
+    }
+});
+
 module.exports = mongoose.model('Ticket', TicketSchema);
 module.exports.TicketStatus = TicketStatus;
