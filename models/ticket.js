@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 const TicketStatus = {
     Open: 'Open',
     InProgress: 'In Progress',
-    Closed: 'Closed'
+    Closed: 'Closed',
+    Cancelled: 'Cancelled'
 }
 
 const TicketSchema = new Schema({
