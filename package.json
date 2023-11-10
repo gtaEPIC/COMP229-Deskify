@@ -24,7 +24,7 @@
     "node": "18.17.1"
   },
   "description": "Deskify",
-  "main": "bin/www",
+  "main": "server.js",
   "keywords": [],
   "author": "",
   "license": "MIT",

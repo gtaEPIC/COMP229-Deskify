@@ -30,7 +30,17 @@ module.exports.getTicketByRecord = async function (req, res, next) {
 // Create a ticket
 module.exports.createTicket = async function (req, res, next) {
     try {
-        let ticket = await ticketModel.create(req.body);
+        let ticket = await ticketModel.create({
+            title: req.body.title,
+            description: req.body.description,
+            status: ticketModel.TicketStatus.Open,
+            priority: 1,
+            record: ticketModel.FormatDateToRecord(new Date()) + '-' + await ticketModel.MakeRecordDigits(ticketModel),
+            dateCreated: new Date(),
+            updated: new Date(),
+            //user: req.body.user,
+
+        });
         res.json({ success: true, ticket: ticket });
     } catch (error) {
         console.log(error);

@@ -15,7 +15,7 @@ const TicketSchema = new Schema({
     description: String, // Description of the ticket
     status: {type: String, default: 'Open', required: true}, // Status of the ticket
     priority: {type: Number, default: 1, required: true}, // Priority of the ticket
-    record: {type: String, required: true, unique: true}, // Record of the ticket (Format to be "YYYYMMDD-<4 digit number>")
+    record: {type: String, required: true, unique: true}, // Record of the ticket (Format to be "YYYYMMDD-XXXX")
     dateCreated: {type: Date, default: Date.now, required: true}, // Date the ticket was created.
     updated: {type: Date, default: Date.now, required: true}, // Date the ticket was last updated.
     //TODO: Finish adding User
@@ -29,8 +29,19 @@ TicketSchema.set('toJSON', {
     transform: function (doc, ret) {
         // remove these props when object is serialized
         delete ret._id;
+        delete ret.id;
     }
 });
 
 module.exports = mongoose.model('Ticket', TicketSchema);
 module.exports.TicketStatus = TicketStatus;
+module.exports.FormatDateToRecord = function(date) {
+    return date.getFullYear() +
+        ('0' + (date.getMonth() + 1)).slice(-2) +
+        ('0' + date.getDate()).slice(-2);
+}
+module.exports.MakeRecordDigits = function(ticketModel) {
+    return ticketModel.countDocuments().then(function (count) {
+        return ('000' + (count + 1)).slice(-4);
+    });
+}
