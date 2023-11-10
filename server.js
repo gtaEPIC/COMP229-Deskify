@@ -21,7 +21,6 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var db = configDB;
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -30,6 +29,7 @@ var db = configDB;
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+configDB();
 
 /**
  * Normalize a port into a number, string, or false.
