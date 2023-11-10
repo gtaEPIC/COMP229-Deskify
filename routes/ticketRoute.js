@@ -11,5 +11,7 @@ router.get('/get/:id', ticketController.getTicketByRecord);
 router.post('/', ticketController.createTicket);
 // Update a ticket
 router.put('/:id', ticketController.updateTicket);
+// Disable a ticket
+router.delete('/:id', ticketController.disableTicket);
 
 module.exports = router;
