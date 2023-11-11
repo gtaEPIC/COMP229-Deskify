@@ -45,8 +45,6 @@ module.exports.createTicket = async function (req, res, next) {
                 comment: "Created this ticket",
                 newStatus: ticketModel.TicketStatus.Open // Mark it as now opened
             }]
-
-            },
         });
         res.json({ success: true, ticket: ticket });
     } catch (error) {
