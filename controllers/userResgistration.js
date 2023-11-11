@@ -1,4 +1,4 @@
-let userRegistration = require("../models/userResgistration");
+
 
 module.exports.createUser = async (req, res, next) => {
     try {
