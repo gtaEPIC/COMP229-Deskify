@@ -118,9 +118,15 @@ module.exports.disableTicket = async function (req, res, next) {
             updated: ticket.updated,
             //user: ticket.user,
             //Iteration
-            // iterationUser: ticket.iteration.user,
-            iterationDateCreated: ticket.iteration.dateCreated,
-            iterationComment: ticket.iteration.comment,
+            iteration: [
+                ... ticket.iteration,
+                {
+                    //username: ticket.user,
+                    dateCreated: new Date(),
+                    comment: "Ticket disabled",
+                    newStatus: ticketModel.TicketStatus.Cancelled
+                }
+            ]
 
         });
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
