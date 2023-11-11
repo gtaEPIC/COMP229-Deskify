@@ -39,10 +39,13 @@ module.exports.createTicket = async function (req, res, next) {
             dateCreated: new Date(),
             updated: new Date(),
             //user: req.body.user,
-            iteration: {
+            iteration: [{
                 //username: req.body.user,
                 dateCreated: new Date(),
-                comment: req.body.comment,
+                comment: "Created this ticket",
+                newStatus: ticketModel.TicketStatus.Open // Mark it as now opened
+            }]
+
             },
         });
         res.json({ success: true, ticket: ticket });
