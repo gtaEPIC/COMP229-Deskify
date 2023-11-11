@@ -39,7 +39,14 @@ module.exports.createTicket = async function (req, res, next) {
             dateCreated: new Date(),
             updated: new Date(),
             //user: req.body.user,
+            iteration: [{
+                //username: req.body.user,
+                dateCreated: new Date(),
+                comment: "Created this ticket",
+                newStatus: ticketModel.TicketStatus.Open // Mark it as now opened
+            }]
 
+            },
         });
         res.json({ success: true, ticket: ticket });
     } catch (error) {
@@ -60,6 +67,18 @@ module.exports.updateTicket = async function (req, res, next) {
         updatedTicket.record = ticket.record;
         updatedTicket.dateCreated = ticket.dateCreated;
         updatedTicket.updated = new Date();
+        //Iteration
+        // If a comment is only being added, all the information will be kept the same
+        // But an iteration will still be created
+        iteration: [
+            ... ticket.iteration,
+            { // Create a new iteration
+                //username: req.body.user,
+                dateCreated: new Date(),
+                comment: req.body.comment,
+                newStatus: req.body.status // If the status is changed it will reflect here
+            }
+        ]
 
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
         console.log(result);
@@ -98,6 +117,17 @@ module.exports.disableTicket = async function (req, res, next) {
             dateCreated: ticket.dateCreated,
             updated: ticket.updated,
             //user: ticket.user,
+            //Iteration
+            iteration: [
+                ... ticket.iteration,
+                {
+                    //username: ticket.user,
+                    dateCreated: new Date(),
+                    comment: "Ticket disabled",
+                    newStatus: ticketModel.TicketStatus.Cancelled
+                }
+            ]
+
         });
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
         console.log(result);
