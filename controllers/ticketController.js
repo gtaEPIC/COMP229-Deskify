@@ -68,10 +68,17 @@ module.exports.updateTicket = async function (req, res, next) {
         updatedTicket.dateCreated = ticket.dateCreated;
         updatedTicket.updated = new Date();
         //Iteration
-        //updatedTicket.iteration.username = ticket.user;
-        updatedTicket.iteration.dateCreated = new Date();
-        updatedTicket.iteration.comment = ticket.iteration.comment;
-
+        // If a comment is only being added, all the information will be kept the same
+        // But an iteration will still be created
+        iteration: [
+            ... ticket.iteration,
+            { // Create a new iteration
+                //username: req.body.user,
+                dateCreated: new Date(),
+                comment: req.body.comment,
+                newStatus: req.body.status // If the status is changed it will reflect here
+            }
+        ]
 
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
         console.log(result);
