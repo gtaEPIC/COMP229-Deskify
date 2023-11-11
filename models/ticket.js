@@ -21,11 +21,12 @@ const TicketSchema = new Schema({
     //TODO: Finish adding User
     //user: {type: Schema.Types.ObjectId, ref: 'User', required: true}, // User that created the ticket
     //Iteration object
-    iteration: {
+    iteration: [{
         //username: {type: String, required: true}, // Username of the person who regitered the change
         dateCreated: {type: Date, default: Date.now, required: true}, // Date the iteration was made
-        comment: {type: String, required: true} // Iteration comment from the user
-    },
+        comment: {type: String, required: true}, // Iteration comment from the user
+        newStatus: {type: String, required: true} // What the status has been changed to, or stays the same
+    }],
 });
 
 TicketSchema.set('toJSON', {
