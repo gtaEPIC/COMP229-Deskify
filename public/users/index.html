@@ -91,13 +91,13 @@
         let data = await response.json();
         if (data.success) {
             // Loop through the users and add them to the table
-            data.list.forEach((user) => {
+            data.users.forEach((user) => {
                 let row = document.createElement("tr");
                 let username = document.createElement("td");
                 let password = document.createElement("td");
                 let email = document.createElement("td");
                 let type = document.createElement("td");
-                let view = document.createElement("td");
+                //let view = document.createElement("td");
                 username.innerText = user.username;
                 password.innerText = user.password;
                 email.innerText = user.email;
