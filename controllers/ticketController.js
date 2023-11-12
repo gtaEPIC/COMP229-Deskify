@@ -65,6 +65,14 @@ module.exports.updateTicket = async function (req, res, next) {
             record: ticket.record,
             dateCreated: ticket.dateCreated,
             updated: new Date(),
+            iteration: [
+                ...ticket.iteration,
+                {
+                    dateCreated: new Date(),
+                    comment: req.body.comment,
+                    newStatus: req.body.status,
+                }
+            ],
         };
 
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
@@ -94,6 +102,14 @@ module.exports.disableTicket = async function (req, res, next) {
             ...ticket.toObject(),
             status: ticketModel.TicketStatus.Cancelled,
             updated: new Date(),
+            iteration: [
+                ...ticket.iteration,
+                {
+                    dateCreated: new Date(),
+                    comment: "Ticket has been cancelled",
+                    newStatus: ticketModel.TicketStatus.Cancelled,
+                }
+            ]
         };
 
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
