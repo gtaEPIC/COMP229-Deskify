@@ -57,31 +57,44 @@
     <a href="/users">User</a>
 </div>
 
-<h1>Create a ticket</h1>
-<form id="ticket-form">
+<h1>Create a user</h1>
+<form id="user-form">
     <table>
         <tr>
-            <td><label for="title">Title:</label></td>
-            <td><input type="text" name="title" id="title"></td>
+            <td><label for="username">Username:</label></td>
+            <td><input type="text" name="username" id="username"></td>
         </tr>
         <tr>
-            <td><label for="description">Description:</label></td>
-            <td><textarea name="description" id="description" cols="30" rows="10"></textarea></td>
+            <td><label for="password">Password:</label></td>
+            <td><input type="text" name="password" id="password"></td>
+        </tr>
+        <tr>
+            <td><label for="email">Email:</label></td>
+            <td><input type="text" name="email" id="email"></td>
+        </tr>
+        <tr>
+            <td><label for="type">Type:</label></td>
+            <td><input type="text" name="type" id="type"></td>
         </tr>
     </table>
     <input type="submit">
 </form>
 <script>
-    const form = document.getElementById('ticket-form');
+    const form = document.getElementById('user-form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+        const type = document.getElementById('type').value;
         const data = {
-            title,
-            description
+            username,
+            password,
+            email,
+            type,
+            data
         };
-        fetch('/ticket', {
+        fetch('/userRegistration', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -91,7 +104,7 @@
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            window.location.href = '/tickets';
+            window.location.href = '/users';
         })
         .catch((error) => {
             console.error('Error:', error);

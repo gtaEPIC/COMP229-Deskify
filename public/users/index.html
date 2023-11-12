@@ -59,7 +59,7 @@
 
 <div class="content">
     <h1>Users</h1>
-    <a href="/tickets/create.html">Create New User</a>
+    <a href="/users/createUser.html">Create New User</a>
     <table>
         <thead>
             <tr>
@@ -67,6 +67,7 @@
                 <th>Password</th>
                 <th>Email</th>
                 <th>User type</th>
+                <th>View</th>
 
             </tr>
         </thead>
@@ -77,8 +78,8 @@
 </div>
 <script>
     // Grab the list of users from the API
-    const ticketList = document.getElementById("user-list");
-    fetch("/user", {
+    const userList = document.getElementById("user-list");
+    fetch("/userRegistration", {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -89,31 +90,25 @@
         }
         let data = await response.json();
         if (data.success) {
-            // Loop through the tickets and add them to the table
-            data.list.forEach((ticket) => {
+            // Loop through the users and add them to the table
+            data.list.forEach((user) => {
                 let row = document.createElement("tr");
-                let record = document.createElement("td");
-                let title = document.createElement("td");
-                let priority = document.createElement("td");
-                let status = document.createElement("td");
-                let created = document.createElement("td");
-                let updated = document.createElement("td");
+                let username = document.createElement("td");
+                let password = document.createElement("td");
+                let email = document.createElement("td");
+                let type = document.createElement("td");
                 let view = document.createElement("td");
-                record.innerText = ticket.record;
-                title.innerText = ticket.title;
-                priority.innerText = ticket.priority;
-                status.innerText = ticket.status;
-                created.innerText = ticket.dateCreated.toLocaleString();
-                updated.innerText = ticket.updated.toLocaleString();
-                view.innerHTML = `<a href="/tickets/${ticket.record}">View</a>`;
-                row.appendChild(record);
-                row.appendChild(title);
-                row.appendChild(priority);
-                row.appendChild(status);
-                row.appendChild(created);
-                row.appendChild(updated);
+                username.innerText = user.username;
+                password.innerText = user.password;
+                email.innerText = user.email;
+                type.innerText = user.type;
+                view.innerHTML = `<a href="/users/${user.username}">View</a>`;
+                row.appendChild(username);
+                row.appendChild(password);
+                row.appendChild(email);
+                row.appendChild(type);
                 row.appendChild(view);
-                ticketList.appendChild(row);
+                userList.appendChild(row);
             })
         } else {
             throw new Error(data.message);
