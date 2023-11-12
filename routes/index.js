@@ -12,6 +12,7 @@ let userModel = require('../models/userResgistration');
 router.get('/tickets/:id', async function(req, res, next) {
     try {
         let ticket = await ticketModel.findOne({record: req.params.id});
+        console.log(ticket);
         if (!ticket) throw new Error('Ticket not found. Are you sure it exists?')
         res.render('ticketView', {title: 'Ticket', ticket: ticket});
     }catch (e) {
@@ -20,10 +21,11 @@ router.get('/tickets/:id', async function(req, res, next) {
     }
 });
 
-router.get('/users/:username', async function(req, res, next) {
+router.get('/users/:id', async function(req, res, next) {
     try {
-        let user = await userModel.findOne({user: req.params.username});
-        if (!user) throw new Error('User not found. Are you sure it exists?')
+        let user = await userModel.findOne({username: req.params.id});
+        console.log(user);
+        if (!user) throw new Error('User not found. Are you sure it exists?'+ user) 
         res.render('userView', {title: 'User', user: user});
     }catch (e) {
         console.error(e);
