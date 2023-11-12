@@ -57,6 +57,7 @@
 </div>
 
 <h1>Ticket <%= ticket.record %></h1>
+<a href="/tickets/<%= ticket.record %>/edit">Edit</a>
 <h3>Title: <%= ticket.title %></h3>
 <p>Description: <%= ticket.description %></p>
 <p>Created: <%= new Date(ticket.dateCreated).toLocaleString() %></p>
@@ -64,7 +65,7 @@
 <p>Status: <%= ticket.status %></p>
 <p>Priority: <%= ticket.priority %></p>
 <p>User: <%= /* ticket.user.username */%></p>
-<p>Resolution: <%= /*ticket.resolution */ %></p>
+<p>Resolution: <%= ticket.resolution %></p>
 <h4>Logs:</h4>
 <ul>
     <% ticket.iteration.forEach((iteration) => {%>

@@ -8,10 +8,25 @@ let ticketModel = require('../models/ticket');
 // });
 
 router.get('/tickets/:id', async function(req, res, next) {
-    let record = req.params.id;
-    let ticket = await ticketModel.findOne({ record: req.params.id });
-    if (!ticket) throw new Error('Ticket not found. Are you sure it exists?')
-    res.render('ticketView', { title: 'Ticket', ticket: ticket });
+    try {
+        let ticket = await ticketModel.findOne({record: req.params.id});
+        if (!ticket) throw new Error('Ticket not found. Are you sure it exists?')
+        res.render('ticketView', {title: 'Ticket', ticket: ticket});
+    }catch (e) {
+        console.error(e);
+        next(e);
+    }
+});
+
+router.get('/tickets/:id/edit', async function(req, res, next) {
+    try {
+        let ticket = await ticketModel.findOne({record: req.params.id});
+        if (!ticket) throw new Error('Ticket not found. Are you sure it exists?')
+        res.render('ticketEdit', {title: 'Tickets', ticket: ticket});
+    }catch (e) {
+        console.error(e);
+        next(e);
+    }
 });
 let indexController = require('../controllers');
 
