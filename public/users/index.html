@@ -70,15 +70,15 @@
 
             </tr>
         </thead>
-        <tbody id="ticket-list">
+        <tbody id="user-list">
 
         </tbody>
     </table>
 </div>
 <script>
-    // Grab the list of tickets from the API
-    const ticketList = document.getElementById("ticket-list");
-    fetch("/ticket", {
+    // Grab the list of users from the API
+    const ticketList = document.getElementById("user-list");
+    fetch("/user", {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
