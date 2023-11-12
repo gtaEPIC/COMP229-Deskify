@@ -79,7 +79,7 @@
 <script>
     // Grab the list of users from the API
     const userList = document.getElementById("user-list");
-    fetch("/userRegistration", {
+    fetch("/users", {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -102,12 +102,12 @@
                 password.innerText = user.password;
                 email.innerText = user.email;
                 type.innerText = user.type;
-                view.innerHTML = `<a href="/users/${user.username}">View</a>`;
+                //view.innerHTML = `<a href="/users/${user.username}">View</a>`;
                 row.appendChild(username);
                 row.appendChild(password);
                 row.appendChild(email);
                 row.appendChild(type);
-                row.appendChild(view);
+                //row.appendChild(view);
                 userList.appendChild(row);
             })
         } else {

@@ -28,6 +28,5 @@ router.get('/tickets/:id/edit', async function(req, res, next) {
         next(e);
     }
 });
-let indexController = require('../controllers');
 
 module.exports = router;
