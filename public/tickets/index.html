@@ -105,7 +105,7 @@
                 status.innerText = ticket.status;
                 created.innerText = ticket.dateCreated.toLocaleString();
                 updated.innerText = ticket.updated.toLocaleString();
-                view.innerHTML = `<a href="/tickets/view/${ticket.record}">View</a>`;
+                view.innerHTML = `<a href="/tickets/${ticket.record}">View</a>`;
                 row.appendChild(record);
                 row.appendChild(title);
                 row.appendChild(priority);
