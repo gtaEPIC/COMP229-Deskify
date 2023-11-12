@@ -3,10 +3,10 @@ var router = express.Router();
 
 let userRegistrationController = require("../controllers/userResgistration");
 
-// TODO: router.get("/users", userRegistrationController.getAllusers);
+router.get("/users", userRegistrationController.getAllUsers);
 router.post("/create", userRegistrationController.createUser);
-//TODO: router.get("/get/:username", userRegistrationController.userByusername, userRegistrationController.read);
-//TODO: router.put("/edit/:username", userRegistrationController.update);
-//TODO: router.delete("/delete/:username", userRegistrationController.deleteUser);
+router.get("/get/:username", userRegistrationController.userByusername, userRegistrationController.read);
+router.put("/edit/:username", userRegistrationController.update);
+router.delete("/delete/:username", userRegistrationController.deleteUser);
 
 module.exports = router;
