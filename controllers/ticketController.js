@@ -42,6 +42,7 @@ module.exports.createTicket = async function (req, res, next) {
                 dateCreated: new Date(),
                 comment: "Created this ticket",
                 newStatus: ticketModel.TicketStatus.Open,
+            }],
             resolution: req.body.resolution
         });
         res.json({ success: true, ticket: ticket });
