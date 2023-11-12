@@ -13,5 +13,8 @@ router.get('/tickets/:id', async function(req, res, next) {
     if (!ticket) throw new Error('Ticket not found. Are you sure it exists?')
     res.render('ticketView', { title: 'Ticket', ticket: ticket });
 });
+let indexController = require('../controllers');
 
+router.get('/', indexController.home);
+router.get('/userRegistration', indexController.userRegistration);
 module.exports = router;
