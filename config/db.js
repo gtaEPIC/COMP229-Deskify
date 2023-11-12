@@ -1,11 +1,10 @@
 // Database setup
-let config = require('./config');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 module.exports = function(){
 
-    mongoose.connect(config.ATLASDB);
+    mongoose.connect(process.env.ATLASDB);
 
     let mongodb = mongoose.connection;
 
