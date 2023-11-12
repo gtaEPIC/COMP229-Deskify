@@ -79,7 +79,7 @@
 <script>
     // Grab the list of users from the API
     const userList = document.getElementById("user-list");
-    fetch("/users", {
+    fetch("/user", {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -89,6 +89,7 @@
             throw new Error("Bad response from server");
         }
         let data = await response.json();
+        console.log(data);
         if (data.success) {
             // Loop through the users and add them to the table
             data.users.forEach((user) => {
