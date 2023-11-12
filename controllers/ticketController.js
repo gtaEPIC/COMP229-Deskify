@@ -42,8 +42,7 @@ module.exports.createTicket = async function (req, res, next) {
                 dateCreated: new Date(),
                 comment: "Created this ticket",
                 newStatus: ticketModel.TicketStatus.Open,
-                resolution: req.body.resolution // Assuming resolution is part of the iteration
-            }]
+            resolution: req.body.resolution
         });
         res.json({ success: true, ticket: ticket });
     } catch (error) {
@@ -65,15 +64,6 @@ module.exports.updateTicket = async function (req, res, next) {
             record: ticket.record,
             dateCreated: ticket.dateCreated,
             updated: new Date(),
-            iteration: [
-                ...ticket.iteration,
-                {
-                    dateCreated: new Date(),
-                    comment: req.body.comment,
-                    newStatus: req.body.status,
-                    resolution: req.body.resolution // Assuming resolution is part of the iteration
-                }
-            ]
         };
 
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
@@ -103,19 +93,9 @@ module.exports.disableTicket = async function (req, res, next) {
             ...ticket.toObject(),
             status: ticketModel.TicketStatus.Cancelled,
             updated: new Date(),
-            iteration: [
-                ...ticket.iteration,
-                {
-                    dateCreated: new Date(),
-                    comment: "Ticket disabled",
-                    newStatus: ticketModel.TicketStatus.Cancelled,
-                    resolution: req.body.resolution // Assuming resolution is part of the iteration
-                }
-            ]
         };
 
         let result = await ticketModel.updateOne({ _id: ticket._id }, updatedTicket);
-        console.log(result);
 
         if (result.modifiedCount > 0) {
             res.json({
