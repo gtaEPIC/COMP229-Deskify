@@ -98,17 +98,17 @@
                 let password = document.createElement("td");
                 let email = document.createElement("td");
                 let type = document.createElement("td");
-                //let view = document.createElement("td");
+                let view = document.createElement("td");
                 username.innerText = user.username;
                 password.innerText = user.password;
                 email.innerText = user.email;
                 type.innerText = user.type;
-                //view.innerHTML = `<a href="/users/${user.username}">View</a>`;
+                view.innerHTML = `<a href="/users/${user.username}">View</a>`;
                 row.appendChild(username);
                 row.appendChild(password);
                 row.appendChild(email);
                 row.appendChild(type);
-                //row.appendChild(view);
+                row.appendChild(view);
                 userList.appendChild(row);
             })
         } else {
