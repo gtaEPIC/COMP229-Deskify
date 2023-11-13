@@ -54,80 +54,59 @@
 <div class="navbar">
     <a href="/">Home</a>
     <a href="/tickets">Tickets</a>
+    <a href="/users">User</a>
 </div>
 
-<h1>Ticket <%= ticket.record %></h1>
-<form id="ticket">
+<h1>User <%= user.username %></h1>
+<form id="user">
     <table>
         <tr>
-            <td><label for="title">Title</label></td>
-            <td><input type="text" id="title" value="<%= ticket.title %>"></td>
+            <td><label for="username">Username</label></td>
+            <td><input type="text" id="username" value="<%= user.username %>"></td>
         </tr>
         <tr>
-            <td><label for="description">Description</label></td>
-            <td><textarea id="description" content="<%= ticket.description %>"></textarea></td>
+            <td><label for="password">Password</label></td>
+            <td><input type="text" id="password" value="<%= user.password %>"></td>
         </tr>
         <tr>
-            <td><label for="status">Status</label></td>
-            <td>
-                <select id="status">
-                    <option value="Open">Open</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Resolved">Resolved</option>
-                    <option value="closed">Closed</option>
-                </select>
-            </td>
+            <td><label for="email">Email</label></td>
+            <td><input type="text" id="email" value="<%= user.email %>"></td>
         </tr>
         <tr>
-            <td><label for="priority">Priority</label></td>
-            <td>
-                <input type="number" id="priority" min="1" max="10" value="<%= ticket.priority %>">
-            </td>
-        </tr>
-        <tr>
-            <td><label for="resolution">Resolution</label></td>
-            <td><textarea id="resolution" content="<%= ticket.resolution %>"></textarea></td>
-        </tr>
-        <tr>
-            <td><label for="comment">Edit Comment</label></td>
-            <td><textarea id="comment"></textarea></td>
+            <td><label for="type">User type</label></td>
+            <td><input type="text" id="type" value="<%= user.type %>"></td>
         </tr>
     </table>
     <button type="submit">Submit</button>
 </form>
 <script>
-    const ticket = document.getElementById('ticket');
-    const title = document.getElementById('title');
-    const description = document.getElementById('description');
-    const status = document.getElementById('status');
-    const priority = document.getElementById('priority');
-    const resolution = document.getElementById('resolution');
-    const comment = document.getElementById('comment');
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const email = document.getElementById('email');
+    const type = document.getElementById('type');
 
-    ticket.addEventListener('submit', (e) => {
+    username.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const ticketData = {
-            title: title.value,
-            description: description.value,
-            status: status.value,
-            priority: priority.value,
-            resolution: resolution.value,
-            comment: comment.value
+        const userData = {
+            usename: username.value,
+            password: password.value,
+            email: email.value,
+            type: type.value
         };
 
-        fetch('/ticket/<%= ticket.record %>', {
+        fetch('/user/<%= user.username %>', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(ticketData)
+            body: JSON.stringify(userData)
         })
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                alert('Ticket Updated');
-                window.location.href = '/tickets/<%= ticket.record %>';
+                alert('User Updated');
+                window.location.href = '/users/<%= user.username %>';
             })
             .catch(err => console.log(err));
     });
