@@ -44,9 +44,11 @@ router.get('/tickets/:id/edit', async function(req, res, next) {
     }
 });
 
-router.get('/users/:id/edit', async function(req, res, next) {
+router.get('/user/:id/edit', async function(req, res, next) {
     try {
         let user = await userModel.findOne({username: req.params.id});
+        console.log(user);
+
         if (!user) throw new Error('User not found. Are you sure it exists?')
         res.render('userEdit', {title: 'User', user: user});
     }catch (e) {
