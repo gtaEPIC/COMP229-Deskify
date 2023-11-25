@@ -1,11 +1,14 @@
-const User = require('../models/userResgistration'); 
+const User = require('../models/userResgistration');
+const {hashSync} = require("bcrypt");
 
 module.exports.createUser = async (req, res, next) => {
     try {
         const { username, password, email, type } = req.body;
 
+        // Using bcrypt to hash the password
+        const hashedPassword = hashSync(password, 10);
         
-        const newUser = new User({ username, password, email, type });
+        const newUser = new User({ username, password: hashedPassword, email, type });
 
         // Save the user to the database
         await newUser.save();
@@ -54,12 +57,15 @@ module.exports.userByusername = async (req, res, next) => {
 
 module.exports.update = async (req, res, next) => {
     try {
+
         const { username } = req.params; // Assuming username is part of the route parameters
         const { password, email, type } = req.body;
 
+        // Using bcrypt to hash the password
+        const hashedPassword = hashSync(password, 10);
         const updatedUser = await User.findOneAndUpdate(
             { username },
-            { password, email, type },
+            { hashedPassword, email, type },
             { new: true } // Return the updated document
         );
 
