@@ -5,7 +5,8 @@ const ticketModel = require('../models/ticket');
 // List all tickets
 module.exports.list = async function (req, res, next) {
     try {
-        let list = await ticketModel.find({}); // .populate('User');
+        // Populate the user field minus the password
+        let list = await ticketModel.find({}).populate('user', '-password');
         res.json({ success: true, list: list });
     } catch (error) {
         console.error(error);
@@ -16,7 +17,7 @@ module.exports.list = async function (req, res, next) {
 // Get a ticket by record
 module.exports.getTicketByRecord = async function (req, res, next) {
     try {
-        let ticket = await ticketModel.findOne({ record: req.params.id });
+        let ticket = await ticketModel.findOne({ record: req.params.id }).populate('user', '-password');
         if (!ticket)
             throw new Error('Ticket not found. Are you sure it exists?')
 
@@ -38,7 +39,10 @@ module.exports.createTicket = async function (req, res, next) {
             record: ticketModel.FormatDateToRecord(new Date()) + '-' + await ticketModel.MakeRecordDigits(ticketModel),
             dateCreated: new Date(),
             updated: new Date(),
+            // Get the user from the JWT
+            user: req.auth.userId,
             iteration: [{
+                user: req.auth.userId,
                 dateCreated: new Date(),
                 comment: "Created this ticket",
                 newStatus: ticketModel.TicketStatus.Open,
@@ -68,6 +72,7 @@ module.exports.updateTicket = async function (req, res, next) {
             iteration: [
                 ...ticket.iteration,
                 {
+                    user: req.auth.userId,
                     dateCreated: new Date(),
                     comment: req.body.comment,
                     newStatus: req.body.status,
@@ -105,6 +110,7 @@ module.exports.disableTicket = async function (req, res, next) {
             iteration: [
                 ...ticket.iteration,
                 {
+                    user: req.auth.userId,
                     dateCreated: new Date(),
                     comment: "Ticket has been cancelled",
                     newStatus: ticketModel.TicketStatus.Cancelled,
