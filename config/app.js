@@ -8,6 +8,7 @@ var indexRouter = require('../routes/index');
 let ticketRouter = require('../routes/ticketRoute');
 var userRegistrationRouter = require('../routes/userRegistration');
 let authRouter = require('../routes/authRoutes');
+const cors = require("cors");
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials");
   next();
 });
+app.options('*', cors()); // Enable preflight for all routes
 
 app.use(logger('dev'));
 app.use(express.json());
