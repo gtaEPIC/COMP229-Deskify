@@ -3,87 +3,230 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deskify - Help desk</title>
+<title>Deskify Design Document</title>
 <style>
-  body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-  }
-  .header {
-    background-color: #f4f4f4;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-  }
-  .header img {
-    width: 150px; /* Adjust as necessary */
-  }
-  .header h1 {
-    margin: 0 0 0 10px;
-  }
-  .navbar {
-    background-color: #333;
-    overflow: hidden;
-  }
-  .navbar a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  .navbar a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  .content {
-    padding: 20px;
-    margin-top: 20px;
-  }
+ body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4; /* Lighter shade for a cleaner look */
+  color: #333;
+  line-height: 1.6;
+}
+
+.header {
+  background-color: #e8e8e8; /* Slightly darker than body for subtle contrast */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px; /* Increased padding for better spacing */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header img {
+  width: 100px; /* Reduced from 150px */
+}
+
+.header h1 {
+  margin: 0;
+  color: #005f73;
+  font-size: 1.8em;
+  font-weight: bold; /* Make heading more prominent */
+}
+
+.navbar {
+  background-color: #2c3e50; /* Dark blue for a professional feel */
+  overflow: hidden;
+  font-size: 1.1em;
+  padding: 15px 0; /* Increased padding for better spacing */
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: #3498db; /* Brighter blue for hover state */
+}
+
+.content {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #3498db; /* Echoing the navbar hover color for consistency */
+  font-weight: bold; /* Make heading more prominent */
+}
+
+p {
+  font-size: 1rem; /* Ensure paragraph text is comfortably readable */
+}
+
+ul {
+  margin-bottom: 20px;
+}
+
+ul li {
+  margin-bottom: 15px; /* Increase spacing between list items */
+}
+
+.color-swatch-container {
+  margin: 20px 0;
+}
+
+.color-swatch {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 2px solid #eaeaea;
+}
+
+.wireframe, .screenshot {
+  border: 2px dashed #ccc;
+  padding: 50px;
+  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+figcaption {
+  margin-top: 15px;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+
+.footer {
+  background-color: #2c3e50; /* Matching the navbar color */
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.9em;
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+.footer a {
+  color: #3498db; /* Link color */
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+  
 </style>
 </head>
 <body>
 
 <div class="header">
-  <img src="images/logo.png" alt="Deskify Logo">
-  <h1>Deskify - Help Desk</h1>
+  <img src="logo.png" alt="Deskify Logo">
+  <h1>Deskify Help-Desk</h1>
 </div>
 
 <div class="navbar">
-  <a href="/">Home</a>
-  <a href="/tickets">Tickets</a>
+  <a href="#home">Home</a>
+  <a href="#projects">Projects</a>
+  <a href="#contactus">Contact Us</a>
+  <a href="#details">Details</a>
 </div>
 
 <div class="content">
-  
   <h2>Overview</h2>
   <p>Welcome to the Deskify Help Desk website design document. This document serves as a comprehensive blueprint for the construction and implementation of our online support platform. Deskify is conceived as a user-centric help desk solution that aims to streamline customer service operations and enhance user engagement through efficient ticketing and support mechanisms. This introduction outlines our vision, objectives, and the scope of functionality intended for Deskify.</p>
   
-  <h2>Team Overview</h2>
-  <p> Deskify is brought to life by a cohesive team of skilled professionals, each bringing a unique set of expertise to the project. Our team is composed of:
-    
-   <p> Project Manager: Johnathan Hall
-    Johnathan oversees the project's progress from conception to launch. His strategic planning and keen oversight ensure that project milestones are met on time and within budget.</p>
-    
-    <p>Lead Software Engineer: Ibtesam Mirza
-    Ibtesam leads the software development efforts, ensuring high-quality code and effective implementation of the project’s technical aspects.</p>
-    
-    <p>UI Programmer: Rodrigo Soto Acuna
-    Rodrigo specializes in user interface programming, focusing on delivering a seamless and intuitive user experience across all devices.</p>
-    
-    <p> Security Programmer: Mohammed Subhaan Asif Hakeem
-    Mohammed is in charge of the platform's security, implementing robust measures to protect user data and prevent breaches.</p>
-    
-    <p>Database Programmer: Anmoljeet Kaur
-    Anmoljeet expertly manages the database architecture, ensuring the integrity and performance of the data storage mechanisms.</p>
-    
-    <p>Web Designer: Saiham Salim Ullah
-    Saiham crafts the website's visual elements, focusing on aesthetics, functionality, and user accessibility.</p>
+  <h2>External Design Document</h2>
+  <p>This section should provide an overview of what the document will cover and the purpose of the Deskify help desk website. It might also include background information on the project, such as the motivation behind it, the specific problem it aims to solve, and the intended audience or user base.</p>
 
+   <!-- Color Swatches Section -->
+   <section id="color-swatches">
+    <h2>Color Swatches</h2>
+    <div class="color-swatch" style="background-color: #005f73;"></div> <!-- Replace with actual color -->
+    <div class="color-swatch" style="background-color: #0a9396;"></div> <!-- Replace with actual color -->
+    <div class="color-swatch" style="background-color: #94d2bd;"></div> <!-- Replace with actual color -->
+    <div class="color-swatch" style="background-color: #ee9b00;"></div> <!-- Replace with actual color -->
+    <!-- Add or replace with more color swatches as needed -->
+  </section>
+
+  <!-- Main Navigation Strategy Section -->
+  <section id="main-navigation-strategy">
+    <h2>Main Navigation Strategy</h2>
+    <p>Our site is designed to ensure users can navigate with ease. The main navigation bar is positioned at the top of every page, providing access to all primary sections of the website. Here's an overview of the navigation strategy:</p>
+    <ul>
+      <li>Top Navigation Bar: Includes links to home, product information, pricing, and customer support areas.</li>
+      <li>Sidebar: Used for secondary navigation links, such as account settings and additional resources.</li>
+      <li>Breadcrumbs: Displayed at the top of content pages, allowing users to trace their path back to the homepage.</li>
+      <li>Footer Navigation: Contains links to legal information, contact pages, and social media accounts.</li>
+    </ul>
+  </section>
+
+  <ul>
+    <li><strong>Project Manager:</strong> Johnathan Hall - Oversees the project's progress...</li>
+    <li><strong>Lead Software Engineer:</strong> Ibtesam Mirza - Ensures high-quality code...</li>
+    <li><strong>UI Programmer:</strong> Rodrigo Soto Acuna - Focuses on delivering a seamless user experience...</li>
+    <li><strong>Security Programmer:</strong> Mohammed Subhaan Asif Hakeem - Implements robust security measures...</li>
+    <li><strong>Database Programmer:</strong> Anmoljeet Kaur - Manages the database architecture...</li>
+    <li><strong>Web Designer:</strong> Saiham Salim Ullah - Crafts the website's visual elements...</li>
+  </ul>
+
+
+  <section class="wireframes">
+    <h2>Wireframes</h2>
+    <p>Below are placeholders for the wireframes that will visually represent the layout of the website's top-level features:</p>
+    
+    <!-- Placeholder for Homepage Wireframe -->
+    <figure>
+      <!-- <img src="path-to-homepage-wireframe.png" alt="Homepage Wireframe"> -->
+      <figcaption>Figure 1: Placeholder for the homepage wireframe.</figcaption>
+    </figure>
+    
+    <!-- Placeholder for Navigation Menu Wireframe -->
+    <figure>
+      <!-- <img src="path-to-navigation-menu-wireframe.png" alt="Navigation Menu Wireframe"> -->
+      <figcaption>Figure 2: Placeholder for the main navigation menu wireframe.</figcaption>
+    </figure>
+  
+    <!-- Placeholder for Ticket Submission Form Wireframe -->
+    <figure>
+      <!-- <img src="path-to-ticket-form-wireframe.png" alt="Ticket Submission Form Wireframe"> -->
+      <figcaption>Figure 3: Placeholder for the ticket submission form wireframe.</figcaption>
+    </figure>
+  
+    <!-- Placeholder for FAQ Section Wireframe -->
+    <figure>
+      <!-- <img src="path-to-faq-section-wireframe.png" alt="FAQ Section Wireframe"> -->
+      <figcaption>Figure 4: Placeholder for the FAQ section wireframe.</figcaption>
+    </figure>
+  
+    <!-- Placeholder for Contact Page Wireframe -->
+    <figure>
+      <!-- <img src="path-to-contact-page-wireframe.png" alt="Contact Page Wireframe"> -->
+      <figcaption>Figure 5: Placeholder for the contact page wireframe.</figcaption>
+    </figure>
+  </section>
+  
   <!-- Add more content here as needed -->
+</div>
+<!-- Footer -->
+<div class="footer">
+  <p>© 2023 Deskify Help-Desk. All rights reserved.</p>
+  <p>Follow us on <a href="your-social-media-link">Social Media</a></p>
 </div>
 
 </body>
