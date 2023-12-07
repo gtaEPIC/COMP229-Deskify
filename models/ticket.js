@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Ticket status "enum"
-// TODO: Add other values for proper ticket workflow
 const TicketStatus = {
     Open: 'Open',
     InProgress: 'In Progress',
@@ -21,13 +20,8 @@ const TicketSchema = new Schema({
     updated: { type: Date, default: Date.now, required: true }, // Date the ticket was last updated.
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // User that created the ticket
     // Iteration object
-    iteration: [{
-        user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Username of the person who registered the change
-        dateCreated: { type: Date, default: Date.now, required: true }, // Date the iteration was made
-        comment: { type: String, required: true }, // Iteration comment from the user
-        newStatus: { type: String, required: true } // What the status has been changed to, or stays the same
-    }],
-    resolution: String,
+    iteration: [{type: Schema.Types.ObjectId, ref: 'Iteration'}],
+    resolution: {type: Schema.Types.ObjectId, ref: 'Iteration'} // Resolution object'
 });
 
 TicketSchema.set('toJSON', {

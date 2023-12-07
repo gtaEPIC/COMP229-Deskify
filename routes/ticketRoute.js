@@ -14,5 +14,12 @@ router.post('/', requireSignin, ticketController.createTicket);
 router.put('/:id', requireSignin, ticketController.updateTicket);
 // Disable a ticket
 router.delete('/:id', requireSignin, ticketController.disableTicket);
+// Set a resolution
+router.put('/:id/resolve/:resolution', requireSignin, ticketController.resolve);
+// Unset a resolution
+router.put('/:id/unresolve', requireSignin, ticketController.unresolve);
+// Add a comment / iteration
+router.post('/:id/comment', requireSignin, ticketController.addComment);
+
 
 module.exports = router;
