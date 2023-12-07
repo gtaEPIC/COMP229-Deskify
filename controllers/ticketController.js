@@ -48,11 +48,11 @@ module.exports.getTicketByRecord = async function (req, res, next) {
 // Create a ticket
 module.exports.createTicket = async function (req, res, next) {
     try {
-        let iteration = await create(req.auth.userId, "Created this ticket", ticketModel.TicketStatus.Open);
+        let iteration = await create(req.auth.userId, "Created this ticket", ticketModel.TicketStatus.New);
         let ticket = await ticketModel.create({
             title: req.body.title,
             description: req.body.description,
-            status: ticketModel.TicketStatus.Open,
+            status: ticketModel.TicketStatus.New,
             priority: 1,
             record: ticketModel.FormatDateToRecord(new Date()) + '-' + await ticketModel.MakeRecordDigits(ticketModel),
             dateCreated: new Date(),
@@ -197,10 +197,10 @@ module.exports.unresolve = async function (req, res, next) {
         if (!ticket)
             throw new Error('Ticket not found. Are you sure it exists?')
 
-        let iteration = await create(req.auth.userId, "Ticket has been un-resolved", ticketModel.TicketStatus.Open);
+        let iteration = await create(req.auth.userId, "Ticket has been un-resolved", ticketModel.TicketStatus.New);
         let updatedTicket = {
             ...ticket.toObject(),
-            status: ticketModel.TicketStatus.Open,
+            status: ticketModel.TicketStatus.New,
             updated: new Date(),
             iteration: [
                 ...ticket.iteration,

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Ticket status "enum"
 const TicketStatus = {
-    Open: 'Open',
+    New: 'New',
     InProgress: 'In Progress',
     Resolved: 'Resolved',
     Closed: 'Closed',
