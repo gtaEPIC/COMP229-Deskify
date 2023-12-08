@@ -4,12 +4,24 @@ const jwt = require("jsonwebtoken");
 
 module.exports.createUser = async (req, res, next) => {
     try {
-        const { username, password, email, type } = req.body;
+        const { username, password, email } = req.body;
+
+        // Check if the username already exists
+        let duplicate = await User.findOne({ username });
+        if (duplicate) {
+            res.status(400).json({ success: false, message: 'Username already exists' });
+            return;
+        }
+        duplicate = await User.findOne({ email });
+        if (duplicate) {
+            res.status(400).json({ success: false, message: 'Email already exists, please login' });
+            return;
+        }
 
         // Using bcrypt to hash the password
         const hashedPassword = hashSync(password, 10);
         
-        const newUser = new User({ username, password: hashedPassword, email, type });
+        const newUser = new User({ username, password: hashedPassword, email, type: 'admin' });
 
         // Save the user to the database
         await newUser.save();
