@@ -1,5 +1,6 @@
 const User = require('../models/userResgistration');
 const {hashSync} = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports.createUser = async (req, res, next) => {
     try {
@@ -13,7 +14,10 @@ module.exports.createUser = async (req, res, next) => {
         // Save the user to the database
         await newUser.save();
 
-        res.status(201).json({ message: 'User Created Successfully' });
+        const token = jwt.sign({ userId: newUser._id, username: newUser.username },
+            process.env.JWT_SECRET || "Default", { algorithm: 'HS512', expiresIn: '1h' });
+
+        res.status(201).json({ success: true, message: 'User Created Successfully', token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
