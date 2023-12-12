@@ -3,8 +3,8 @@ const isAdmin = (req, res, next) => {
     if (req.user && req.user.isAdmin) {
         next();
     } else {
-        res.status(403).json({ message: 'Forbidden. Admin access required.' });
+        const error = new Error('Forbidden. Admin access required.');
+        error.status = 403;
+        next(error);
     }
 };
-
-module.exports = isAdmin;

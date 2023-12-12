@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -6,6 +5,10 @@ const userSchema = new mongoose.Schema({
     password: String,
     email: String,
     type: String,
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const User = mongoose.model('User', userSchema);
