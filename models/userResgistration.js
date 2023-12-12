@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     password: String,
     email: String,
     type: String,
+    status: { type: String, default: 'active' } // Default status is 'active'
 });
 
 const User = mongoose.model('User', userSchema);

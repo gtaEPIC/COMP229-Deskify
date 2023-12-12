@@ -9,5 +9,7 @@ router.post("/", userRegistrationController.createUser);
 router.get("/:username", userRegistrationController.userByusername);
 router.put("/:username", requireSignin, userRegistrationController.update);
 router.delete("/:username", userRegistrationController.deleteUser);
+//for disabled users
+router.put('/disable/:username', userController.disableUser);
 
 module.exports = router;
