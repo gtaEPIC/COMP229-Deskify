@@ -1,14 +1,17 @@
-const User = require('../models/userResgistration');
+const User = require('../models/userResgistration'); // Correct the path to the user model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {expressjwt} = require("express-jwt");
+const expressjwt = require('express-jwt');
 
 exports.user_login = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username });
         if (user && bcrypt.compareSync(req.body.password, user.password)) {
-            const token = jwt.sign({ userId: user._id, username: user.username },
-                process.env.JWT_SECRET || "Default", { algorithm: 'HS512', expiresIn: '1h' });
+            const token = jwt.sign(
+                { userId: user._id, username: user.username, isAdmin: user.isAdmin },
+                process.env.JWT_SECRET || 'Default',
+                { algorithm: 'HS512', expiresIn: '1h' }
+            );
             res.json({ success: true, token: token });
         } else {
             res.status(401).send('Authentication failed');
@@ -23,10 +26,6 @@ exports.user_logout = (req, res) => {
     res.json({ success: true, message: 'Logout successful. Please delete the token.' });
 };
 
-/**
- * @Deprecated
- * Please use userRegistration.js.update instead
- */
 exports.modify_account = async (req, res) => {
     // Example of updating user's password
     try {
@@ -38,8 +37,8 @@ exports.modify_account = async (req, res) => {
     }
 };
 
-module.exports.requireSignin = expressjwt({
-    secret: process.env.JWT_SECRET || "Default",
+exports.requireSignin = expressjwt({
+    secret: process.env.JWT_SECRET || 'Default',
     algorithms: ['HS512'],
-    userProperty: 'auth'
+    userProperty: 'auth',
 });
