@@ -136,5 +136,36 @@ module.exports.disableUser = async (req, res, next) => {
     }
 };
 
+module.exports.changeTicketState = async (req, res, next) => {
+    try {
+        const { username, ticketId, newState } = req.params;
 
+        // Find the user by username
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            res.status(404).json({ success: false, message: 'User not found' });
+            return;
+        }
+
+        // Find the ticket by ticketId in the user's tickets array
+        const ticketIndex = user.tickets.findIndex(ticket => ticket._id.toString() === ticketId);
+
+        if (ticketIndex === -1) {
+            res.status(404).json({ success: false, message: 'Ticket not found' });
+            return;
+        }
+
+        // Update the state of the ticket
+        user.tickets[ticketIndex].state = newState;
+
+        // Save the updated user with the modified ticket state
+        await user.save();
+
+        res.status(200).json({ success: true, message: 'Ticket state updated successfully', user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+};
 

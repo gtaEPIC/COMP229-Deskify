@@ -11,5 +11,6 @@ router.put("/:username", requireSignin, userRegistrationController.update);
 router.delete("/:username", userRegistrationController.deleteUser);
 //for disabled users
 router.put('/disable/:username', userController.disableUser);
+router.put('/change-ticket-state/:username/:ticketId/:newState', userController.changeTicketState);
 
 module.exports = router;
