@@ -1,6 +1,6 @@
 // middleware/isAdmin.js
 const isAdmin = (req, res, next) => {
-    if (req.user && req.user.isAdmin) {
+    if (req.user && req.user.type === 'admin') {
         next();
     } else {
         const error = new Error('Forbidden. Admin access required.');
