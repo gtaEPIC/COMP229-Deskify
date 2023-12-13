@@ -31,7 +31,7 @@ exports.user_logout = (req, res) => {
 exports.modify_account = async (req, res) => {
     try {
         const hashedPassword = bcrypt.hashSync(req.body.newPassword, 10);
-        await User.findByIdAndUpdate(req.user.userId, { password: hashedPassword });
+        await User.findByIdAndUpdate(req.auth.userId, { password: hashedPassword });
         res.json({ success: true, message: 'Account updated successfully' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -42,4 +42,4 @@ exports.requireSignin = expressjwt({
     secret: process.env.JWT_SECRET || 'Default',
     algorithms: ['HS512'],
     userProperty: 'auth',
-}).unless({ path: ['/public', '/login', '/signup'] });
+});

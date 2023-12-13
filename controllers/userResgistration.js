@@ -123,7 +123,7 @@ module.exports.promoteToAdmin = async (req, res, next) => {
         const { username } = req.params;
 
         // Ensure the requesting user is an admin
-        const requestingUser = req.user;
+        const requestingUser = await User.findById(req.auth.userId);
         if (!requestingUser || requestingUser.type !== 'admin') {
             res.status(403).json({ success: false, message: 'Unauthorized' });
             return;
