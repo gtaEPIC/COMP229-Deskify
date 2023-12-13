@@ -73,7 +73,13 @@ module.exports.getUserByUsername = async (req, res, next) => {
 
 module.exports.updateUser = async (req, res, next) => {
     try {
+        const requestingUser = await User.findById(req.auth.userId);
         const { username } = req.params;
+        if (requestingUser.username !== username) {
+            res.status(403).json({ success: false, message: 'Unauthorized' });
+            return;
+        }
+
         const { password, email } = req.body;
         let updatedUser;
         // If password is not provided, do not update it

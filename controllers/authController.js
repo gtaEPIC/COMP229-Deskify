@@ -7,6 +7,10 @@ exports.user_login = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username });
 
+        if (user && user.status === 'disabled') {
+            return res.status(401).json({ success: false, message: 'Authentication failed. Account disabled.' });
+        }
+
         if (user && bcrypt.compareSync(req.body.password, user.password)) {
             const token = jwt.sign(
                 { userId: user._id, username: user.username, isAdmin: user.type === 'admin' },
