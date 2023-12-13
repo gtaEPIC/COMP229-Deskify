@@ -2,21 +2,6 @@ const User = require('../models/userResgistration');
 const { hashSync } = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Helper function to create the initial admin if no users exist
-const createInitialAdmin = async () => {
-    const userCount = await User.countDocuments();
-    if (userCount === 0) {
-        const initialAdminPassword = process.env.INITIAL_ADMIN_PASSWORD || 'adminpassword';
-        const hashedPassword = hashSync(initialAdminPassword, 10);
-        const adminUser = new User({
-            username: 'admin',
-            password: hashedPassword,
-            email: 'admin@example.com',
-            type: 'admin',
-        });
-        await adminUser.save();
-    }
-};
 
 module.exports.createUser = async (req, res, next) => {
     try {
@@ -30,12 +15,14 @@ module.exports.createUser = async (req, res, next) => {
 
         const hashedPassword = hashSync(password, 10);
 
-        const newUser = new User({ username, password: hashedPassword, email, type: 'user' });
+        let type = 'user';
+        if (await User.countDocuments({ type: 'admin' }) === 0) {
+            type = 'admin';
+        }
+
+        const newUser = new User({ username, password: hashedPassword, email, type });
 
         await newUser.save();
-
-        // Create an initial admin if no users exist
-        await createInitialAdmin();
 
         const token = jwt.sign(
             { userId: newUser._id, username: newUser.username },
