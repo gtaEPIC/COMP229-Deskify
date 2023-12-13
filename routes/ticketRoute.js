@@ -20,9 +20,6 @@ router.put('/:id/resolve/:resolution', requireSignin, ticketController.resolve);
 router.put('/:id/unresolve', requireSignin, ticketController.unresolve);
 // Add a comment / iteration
 router.post('/:id/comment', requireSignin, ticketController.addComment);
-//Cancel a ticket using GET
-router.get('/:id/cancel', requireSignin, ticketController.cancelTicket)
-
 
 
 module.exports = router;
