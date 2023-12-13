@@ -77,7 +77,7 @@ module.exports.updateUser = async (req, res, next) => {
         const { password, email } = req.body;
         let hashedPassword = null;
         // If password is not provided, do not update it
-        if (!password) {
+        if (password) {
             hashedPassword = hashSync(password, 10);
         }
         const updatedUser = await User.findOneAndUpdate(
