@@ -255,35 +255,3 @@ module.exports.addComment = async function (req, res, next) {
         next(e);
     }
 }
-
-// Add the cancelTicket method 
-module.exports.cancelTicket = async function (req, res, next) {
-    try {
-        let ticket = await ticketModel.findOne({ record: req.params.id });
-        if (!ticket)
-            throw new Error('Ticket not found. Are you sure it exists?');
-
-        // Ensure the ticket is not already closed or cancelled
-        if (ticket.status === ticketModel.TicketStatus.Closed || ticket.status === ticketModel.TicketStatus.Cancelled) {
-            return res.status(400).json({ success: false, message: 'Ticket is already closed or cancelled.' });
-        }
-
-        // Update the status to Cancelled
-        ticket.status = ticketModel.TicketStatus.Cancelled;
-
-        // Update the last updated timestamp
-        ticket.updated = new Date();
-
-        // Save the updated ticket
-        await ticket.save();
-
-        res.json({
-            success: true,
-            message: 'Ticket cancelled successfully.',
-            cancelledTicket: ticket.toJSON()
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Internal Server Error' });
-    }
-};
