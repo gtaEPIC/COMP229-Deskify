@@ -9,8 +9,12 @@ let ticketRouter = require('../routes/ticketRoute');
 var userRegistrationRouter = require('../routes/userRegistration');
 let authRouter = require('../routes/authRoutes');
 const cors = require("cors");
+// const isAdminMiddleware = require('../middleware/isAdmin'); // Update the path based on your directory structure
 
 var app = express();
+
+// Apply the isAdminMiddleware globally
+// app.use(isAdminMiddleware);
 
 // view engine setup
 app.set('views', path.join(__dirname, '../views'));
