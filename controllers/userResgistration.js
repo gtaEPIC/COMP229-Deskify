@@ -107,21 +107,25 @@ module.exports.updateUser = async (req, res, next) => {
     }
 };
 
-module.exports.deleteUser = async (req, res, next) => {
+module.exports.disableUser = async (req, res, next) => {
     try {
-        const { username } = req.params;
+        const { username } = req.params; // Assuming username is part of the route parameters
 
-        const deletedUser = await User.findOneAndDelete({ username });
+        const disabledUser = await User.findOneAndUpdate(
+            { username },
+            { status: 'disabled' },
+            { new: true } // Return the updated document
+        );
 
-        if (!deletedUser) {
+        if (!disabledUser) {
             res.status(404).json({ success: false, message: 'User not found' });
             return;
         }
 
-        res.status(200).json({ success: true, message: 'User deleted successfully', user: deletedUser });
+        res.status(200).json({ success: true, message: 'User disabled successfully', user: disabledUser });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Internal Server Error' });
+        res.status(500).json({ success: false, message: 'Internal Server Error'});
     }
 };
 
