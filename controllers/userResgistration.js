@@ -24,7 +24,7 @@ module.exports.createUser = async (req, res, next) => {
         await newUser.save();
 
         const token = jwt.sign(
-            { userId: newUser._id, username: newUser.username },
+            { userId: newUser._id, username: newUser.username, isAdmin: newUser.type === 'admin' },
             process.env.JWT_SECRET || 'Default',
             { algorithm: 'HS512', expiresIn: '1h' }
         );
