@@ -8,14 +8,13 @@ var indexRouter = require('../routes/index');
 let ticketRouter = require('../routes/ticketRoute');
 var userRegistrationRouter = require('../routes/userRegistration');
 let authRouter = require('../routes/authRoutes');
-let adminRouter = require('../routes/adminRoutes');
 const cors = require("cors");
-const isAdminMiddleware = require('../middleware/isAdmin'); // Update the path based on your directory structure
+// const isAdminMiddleware = require('../middleware/isAdmin'); // Update the path based on your directory structure
 
 var app = express();
 
 // Apply the isAdminMiddleware globally
-app.use(isAdminMiddleware);
+// app.use(isAdminMiddleware);
 
 // view engine setup
 app.set('views', path.join(__dirname, '../views'));
@@ -40,7 +39,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
 app.use('/', authRouter);
-app.use('/', adminRouter);
 app.use('/ticket', ticketRouter);
 app.use('/users', userRegistrationRouter);
 

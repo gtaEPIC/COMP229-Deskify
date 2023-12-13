@@ -6,8 +6,8 @@ const {requireSignin} = require("../controllers/authController");
 
 router.get("/", userRegistrationController.getAllUsers);
 router.post("/", userRegistrationController.createUser);
-router.get("/:username", userRegistrationController.userByusername);
-router.put("/:username", requireSignin, userRegistrationController.update);
+router.get("/:username", userRegistrationController.getUserByUsername);
+router.put("/:username", requireSignin, userRegistrationController.updateUser);
 router.delete("/:username", userRegistrationController.deleteUser);
 
 module.exports = router;

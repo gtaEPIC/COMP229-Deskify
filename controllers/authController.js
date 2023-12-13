@@ -1,7 +1,7 @@
 const User = require('../models/userResgistration');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const expressjwt = require('express-jwt');
+const {expressjwt} = require('express-jwt');
 
 exports.user_login = async (req, res) => {
     try {
@@ -9,7 +9,7 @@ exports.user_login = async (req, res) => {
 
         if (user && bcrypt.compareSync(req.body.password, user.password)) {
             const token = jwt.sign(
-                { userId: user._id, username: user.username, isAdmin: user.isAdmin },
+                { userId: user._id, username: user.username, isAdmin: user.type === 'admin' },
                 process.env.JWT_SECRET || 'Default',
                 { algorithm: 'HS512', expiresIn: '1h' }
             );
