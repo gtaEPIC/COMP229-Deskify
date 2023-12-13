@@ -1,4 +1,4 @@
-const User = require('../models/userRegistration');
+const User = require('../models/userResgistration');
 const { hashSync } = require('bcrypt');
 const jwt = require('jsonwebtoken');
 

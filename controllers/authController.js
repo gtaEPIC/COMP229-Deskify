@@ -1,7 +1,7 @@
 const User = require('../models/userResgistration');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const expressjwt = require('express-jwt');
+const {expressjwt} = require('express-jwt');
 
 exports.user_login = async (req, res) => {
     try {
