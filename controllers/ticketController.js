@@ -1,5 +1,6 @@
 const ticketModel = require('../models/ticket');
 const {create, fetch} = require("./iterationController");
+const User = require("../models/userResgistration");
 
 // List all tickets
 module.exports.list = async function (req, res, next) {
@@ -72,10 +73,16 @@ module.exports.createTicket = async function (req, res, next) {
 // Update a ticket
 module.exports.updateTicket = async function (req, res, next) {
     try {
-        let ticket = await ticketModel.findOne({ record: req.params.id });
+        const requestingUser = await User.findById(req.auth.userId);
+        let ticket = await ticketModel.findOne({ record: req.params.id }).populate('user', '-password');
         if (!ticket)
             throw new Error('Ticket not found. Are you sure it exists?')
-        // TODO: Only creator can change title / description. Admin can change anything
+
+        if (requestingUser.username !== ticket.user.username && requestingUser.type !== 'admin') {
+            res.status(403).json({ success: false, message: 'Unauthorized' });
+            return;
+        }
+
         // Determine what changed and add a comment
         let comment = "";
         if (ticket.title !== req.body.title) {
@@ -85,9 +92,17 @@ module.exports.updateTicket = async function (req, res, next) {
             comment += "Description changed from " + ticket.description + " to " + req.body.description + ". ";
         }
         if (ticket.status !== req.body.status) {
+            if (requestingUser.type !== 'admin') {
+                res.status(403).json({ success: false, message: 'Non-Admins can\'t change status.' });
+                return;
+            }
             comment += "Status changed from " + ticket.status + " to " + req.body.status + ". ";
         }
         if (ticket.priority !== req.body.priority) {
+            if (requestingUser.type !== 'admin') {
+                res.status(403).json({ success: false, message: 'Non-Admins can\'t change priority.' });
+                return;
+            }
             comment += "Priority changed from " + ticket.priority + " to " + req.body.priority + ". ";
         }
         if (comment === "") return res.json({ success: true, message: "No changes detected." });
@@ -123,9 +138,16 @@ module.exports.updateTicket = async function (req, res, next) {
 // Disable a ticket
 module.exports.disableTicket = async function (req, res, next) {
     try {
-        let ticket = await ticketModel.findOne({ record: req.params.id });
+        const requestingUser = await User.findById(req.auth.userId);
+        let ticket = await ticketModel.findOne({ record: req.params.id }).populate('user', '-password');
         if (!ticket)
-            throw new Error('Ticket not found. Are you sure it exists?')
+            throw new Error('Ticket not found. Are you sure it exists?');
+
+        if (requestingUser.username !== ticket.user.username && requestingUser.type !== 'admin') {
+            res.status(403).json({ success: false, message: 'Unauthorized' });
+            return;
+        }
+
         let iteration = await create(req.auth.userId, "Ticket has been cancelled", ticketModel.TicketStatus.Cancelled);
         let updatedTicket = {
             ...ticket.toObject(),
@@ -155,10 +177,16 @@ module.exports.disableTicket = async function (req, res, next) {
 
 module.exports.resolve = async function (req, res, next) {
     try {
-        let ticket = await ticketModel.findOne({ record: req.params.id });
+        const requestingUser = await User.findById(req.auth.userId);
+        let ticket = await ticketModel.findOne({ record: req.params.id }).populate('user', '-password');
         if (!ticket)
             throw new Error('Ticket not found. Are you sure it exists?')
-        // TODO: Only the creator or an admin should be able to set the resolution
+
+        if (requestingUser.username !== ticket.user.username && requestingUser.type !== 'admin') {
+            res.status(403).json({ success: false, message: 'Unauthorized' });
+            return;
+        }
+
         let resolvedIteration = await fetch(req.params.resolution);
         if (!resolvedIteration)
             throw new Error('Resolution not found. Are you sure it exists?')
@@ -193,9 +221,15 @@ module.exports.resolve = async function (req, res, next) {
 // Unresolve a ticket
 module.exports.unresolve = async function (req, res, next) {
     try {
-        let ticket = await ticketModel.findOne({ record: req.params.id });
+        const requestingUser = await User.findById(req.auth.userId);
+        let ticket = await ticketModel.findOne({ record: req.params.id }).populate('user', '-password');
         if (!ticket)
             throw new Error('Ticket not found. Are you sure it exists?')
+
+        if (requestingUser.username !== ticket.user.username && requestingUser.type !== 'admin') {
+            res.status(403).json({ success: false, message: 'Unauthorized' });
+            return;
+        }
 
         let iteration = await create(req.auth.userId, "Ticket has been un-resolved", ticketModel.TicketStatus.New);
         let updatedTicket = {
@@ -227,9 +261,15 @@ module.exports.unresolve = async function (req, res, next) {
 
 module.exports.addComment = async function (req, res, next) {
     try {
+        const requestingUser = await User.findById(req.auth.userId);
         let ticket = await ticketModel.findOne({record: req.params.id});
         if (!ticket)
             throw new Error('Ticket not found. Are you sure it exists?')
+
+        if (!(ticket.status !== ticketModel.TicketStatus.New || ticket.status !== ticketModel.TicketStatus.InProgress) && requestingUser.type !== 'admin') {
+            return res.status(403).json({success: false, message: 'Cannot add comment while ticket is closed'});
+        }
+
         let iteration = await create(req.auth.userId, req.body.comment, ticket.status);
         let updatedTicket = {
             ...ticket.toObject(),
