@@ -1,7 +1,6 @@
 const User = require('../models/userResgistration');
-const { hashSync } = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
+const {hashSync} = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports.createUser = async (req, res, next) => {
     try {
