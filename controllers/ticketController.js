@@ -261,9 +261,15 @@ module.exports.unresolve = async function (req, res, next) {
 
 module.exports.addComment = async function (req, res, next) {
     try {
+        const requestingUser = await User.findById(req.auth.userId);
         let ticket = await ticketModel.findOne({record: req.params.id});
         if (!ticket)
             throw new Error('Ticket not found. Are you sure it exists?')
+
+        if (!(ticket.status !== ticketModel.TicketStatus.New || ticket.status !== ticketModel.TicketStatus.InProgress) && requestingUser.type !== 'admin') {
+            return res.status(403).json({success: false, message: 'Cannot add comment while ticket is closed'});
+        }
+
         let iteration = await create(req.auth.userId, req.body.comment, ticket.status);
         let updatedTicket = {
             ...ticket.toObject(),
