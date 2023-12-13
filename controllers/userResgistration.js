@@ -38,7 +38,7 @@ module.exports.createUser = async (req, res, next) => {
 
 module.exports.getAllUsers = async (req, res, next) => {
     try {
-        const users = await User.find();
+        const users = await User.find({}, "-password");
         res.status(200).json({
             success: true,
             message: 'Users retrieved successfully',
@@ -57,7 +57,7 @@ module.exports.getUserByUsername = async (req, res, next) => {
     try {
         const { username } = req.params;
 
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username }, "-password");
 
         if (!user) {
             res.status(404).json({ success: false, message: 'User not found' });
@@ -75,18 +75,18 @@ module.exports.updateUser = async (req, res, next) => {
     try {
         const { username } = req.params;
         const { password, email } = req.body;
-
-        // Validate required fields
-        if (!password || !email) {
-            return res.status(400).json({ success: false, message: 'Password and email are required for update' });
+        let hashedPassword = null;
+        // If password is not provided, do not update it
+        if (!password) {
+            hashedPassword = hashSync(password, 10);
         }
-
-        const hashedPassword = hashSync(password, 10);
         const updatedUser = await User.findOneAndUpdate(
             { username },
             { password: hashedPassword, email },
             { new: true }
         );
+        // Remove the password from the returned user
+        updatedUser.password = undefined;
 
         if (!updatedUser) {
             res.status(404).json({ success: false, message: 'User not found' });
@@ -139,6 +139,9 @@ module.exports.promoteToAdmin = async (req, res, next) => {
             res.status(404).json({ success: false, message: 'User not found' });
             return;
         }
+
+        // Remove the password from the returned user
+        userToPromote.password = undefined;
 
         res.status(200).json({ success: true, message: 'User promoted to admin successfully', user: userToPromote });
     } catch (error) {
